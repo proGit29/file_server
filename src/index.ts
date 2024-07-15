@@ -28,7 +28,7 @@ app.post('/',upload.single('genURL'),async(req:Request,res:Response)=>{
         const files=req.file;
         let typeOfFile:any=files?.originalname.split('.')
         let destURL;
-        if(typeOfFile.length>1){
+        if(typeOfFile&&typeOfFile.length>1){
             console.log(typeOfFile[1])
             const url=resolve(__dirname,"../","uploads",`${files?.filename}`);
             console.log(url);
@@ -37,6 +37,8 @@ app.post('/',upload.single('genURL'),async(req:Request,res:Response)=>{
                     destURL=`${url}.${typeOfFile[1]}`;
                 }
             })
+        }else{
+            throw new Error("Type of file is Undefined (Note file should contain . followed by its type)")
         }
         const finalURL=`${process.env.RUNTIME}/uploads/${files?.filename}.${typeOfFile[1]}`
 
