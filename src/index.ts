@@ -5,6 +5,7 @@ import multer from 'multer';
 import { dirname, resolve } from 'path';
 import { fileURLToPath } from 'url';
 import { rename } from 'fs';
+import cors from 'cors';
     
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -15,7 +16,11 @@ config()
 //multer setup
 const upload=multer({dest:'./uploads'})
 
+
+
 const app=express()
+
+app.use(cors())
 
 app.post('/',upload.single('genURL'),async(req:Request,res:Response)=>{
     try{
